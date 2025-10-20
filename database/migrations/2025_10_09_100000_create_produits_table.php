@@ -4,23 +4,21 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddClothingFieldsToProduitsTable extends Migration
-{
-    public function up()
+return new class extends Migration {
+    public function up(): void
     {
-        Schema::table('produits', function (Blueprint $table) {
-            $table->string('categorie')->default('Vetement');   // T-shirt, Pantalon, Robe...
-            $table->string('marque')->nullable();               // Nike, Zara, etc.
-            $table->string('taille', 10)->nullable();           // XS,S,M,L,XL
-            $table->string('couleur', 30)->nullable();          // Noir, Bleu, ...
-            $table->string('image_url')->nullable();            // URL d’image (simple)
+        Schema::create('produits', function (Blueprint $table) {
+            $table->id();
+            $table->string('nom');
+            $table->text('description')->nullable();
+            $table->decimal('prix', 8, 2)->default(0);
+            $table->integer('quantite')->default(0);
+            $table->timestamps();
         });
     }
 
-    public function down()
+    public function down(): void
     {
-        Schema::table('produits', function (Blueprint $table) {
-            $table->dropColumn(['categorie','marque','taille','couleur','sexe','image_url']);
-        });
+        Schema::dropIfExists('produits');
     }
-}
+};

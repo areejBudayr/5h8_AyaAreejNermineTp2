@@ -3,27 +3,83 @@
 @section('header','Produits')
 
 @section('content')
-<table>
-  <thead><tr><th>#</th><th>Nom</th><th>Prix</th><th>Qté</th><th></th></tr></thead>
-  <tbody>
-  @forelse($produits as $p)
-    <tr>
-      <td>{{ $p->id }}</td>
-      <td><a href="{{ route('produits.show',$p) }}">{{ $p->nom }}</a></td>
-      <td>{{ number_format($p->prix,2,',',' ') }} $</td>
-      <td>{{ $p->quantite }}</td>
-      <td>
-        <a class="button" href="{{ route('produits.edit',$p) }}">Modifier</a>
-        <form class="inline" method="POST" action="{{ route('produits.destroy',$p) }}">
-          @csrf @method('DELETE')
-          <button type="submit" onclick="return confirm('Supprimer ?')">Supprimer</button>
-        </form>
-      </td>
-    </tr>
-  @empty
-    <tr><td colspan="5">Aucun produit.</td></tr>
-  @endforelse
-  </tbody>
-</table>
-<div style="margin-top:12px">{{ $produits->links() }}</div>
+<div class="container mt-4">
+
+    {{-- barre d’actions --}}
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="m-0">Produits</h2>
+        <a href="{{ route('produits.create') }}" class="btn btn-primary">+ Ajouter</a>
+    </div>
+
+    {{-- messages flash / erreurs --}}
+    @if(session('ok'))
+        <div class="alert alert-success">{{ session('ok') }}</div>
+    @endif
+    @if ($errors->any())
+        <div class="alert alert-danger mb-3">
+            <ul class="m-0 ps-3">
+                @foreach ($errors->all() as $e)
+                    <li>{{ $e }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    {{-- filtres simples --}}
+    <form method="GET" class="row g-2 mb-3">
+        <div class="col-sm-6 col-md-4">
+            <input name="search" value="{{ request('search') }}" class="form-control" placeholder="Rechercher un nom…">
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-outline-primary">Filtrer</button>
+            <a href="{{ route('produits.index') }}" class="btn btn-outline-secondary">Réinitialiser</a>
+        </div>
+    </form>
+
+    {{-- tableau --}}
+    <div class="table-responsive">
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th style="width:80px">#</th>
+                    <th>Nom</th>
+                    <th style="width:140px">Prix</th>
+                    <th style="width:100px">Qté</th>
+                    <th style="width:220px"></th>
+                </tr>
+            </thead>
+            <tbody>
+            @forelse($produits as $p)
+                <tr>
+                    <td>{{ $p->id }}</td>
+                    <td>
+                        <a href="{{ route('produits.show',$p) }}">{{ $p->nom }}</a>
+                        @if($p->categorie)
+                            <div class="text-muted small">{{ $p->categorie }}</div>
+                        @endif
+                    </td>
+                    <td>{{ number_format($p->prix, 2, ',', ' ') }} $</td>
+                    <td>{{ $p->quantite }}</td>
+                    <td class="text-nowrap">
+                        <a class="btn btn-sm btn-outline-secondary" href="{{ route('produits.show',$p) }}">Voir</a>
+                        <a class="btn btn-sm btn-warning" href="{{ route('produits.edit',$p) }}">Modifier</a>
+                        <form class="d-inline" method="POST" action="{{ route('produits.destroy',$p) }}">
+                            @csrf @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-danger"
+                                    onclick="return confirm('Supprimer ce produit ?')">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            @empty
+                <tr><td colspan="5" class="text-center text-muted">Aucun produit.</td></tr>
+            @endforelse
+            </tbody>
+        </table>
+    </div>
+
+    {{-- pagination (conserve les filtres) --}}
+    <div class="mt-3">
+        {{ $produits->withQueryString()->links() }}
+    </div>
+</div>
 @endsection

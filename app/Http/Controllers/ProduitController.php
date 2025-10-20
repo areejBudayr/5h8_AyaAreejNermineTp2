@@ -6,64 +6,70 @@ use Illuminate\Http\Request;
 
 class ProduitController extends Controller
 {
-    public function index()
-{
-    $q = Produit::orderBy('created_at','desc');
+    public function index(Request $r)
+    {
+        $q = Produit::query()->orderBy('created_at','desc');
 
-    // (facultatif mais utile) petits filtres si la prof accepte
-    if (request('search'))  $q->where('nom','like','%'.request('search').'%');
-    if (request('categorie')) $q->where('categorie', request('categorie'));
-    if (request('taille'))  $q->where('taille', request('taille'));
-    if (request('sexe'))    $q->where('sexe', request('sexe'));
+        // filtres optionnels
+        if ($r->filled('search'))   $q->where('nom', 'like', '%'.$r->search.'%');
+        if ($r->filled('categorie'))$q->where('categorie', $r->categorie);
+        if ($r->filled('taille'))   $q->where('taille', $r->taille);
+        if ($r->filled('sexe'))     $q->where('sexe', $r->sexe);
 
-    $produits = $q->paginate(10)->appends(request()->query());
-    return view('produits.index', compact('produits'));
-}
+        $produits = $q->paginate(10)->appends($r->query());
 
-public function store(\Illuminate\Http\Request $r)
-{
-    $data = $r->validate([
-        'nom'        => 'required|string|max:255',
-        'description'=> 'nullable|string',
-        'prix'       => 'required|numeric|min:0',
-        'quantite'   => 'required|integer|min:0',
+        return view('produits.index', compact('produits'));
+    }
 
-        'categorie'  => 'required|string|max:50',
-        'marque'     => 'nullable|string|max:50',
-        'taille'     => 'nullable|string|max:10',
-        'couleur'    => 'nullable|string|max:30',
-        'sexe'       => 'required|string|max:10',
-        'image_url'  => 'nullable|url',
-    ]);
+    public function create()
+    {
+        return view('produits.create');
+    }
 
-    Produit::create($data);
-    return redirect()->route('produits.index')->with('ok','Produit ajouté.');
-}
+    public function store(Request $r)
+    {
+        $data = $this->rules($r);
+        Produit::create($data);
+        return redirect()->route('produits.index')->with('ok', 'Produit ajouté.');
+    }
 
-public function update(\Illuminate\Http\Request $r, Produit $produit)
-{
-    $data = $r->validate([
-        'nom'        => 'required|string|max:255',
-        'description'=> 'nullable|string',
-        'prix'       => 'required|numeric|min:0',
-        'quantite'   => 'required|integer|min:0',
+    public function show(Produit $produit)
+    {
+        return view('produits.show', compact('produit'));
+    }
 
-        'categorie'  => 'required|string|max:50',
-        'marque'     => 'nullable|string|max:50',
-        'taille'     => 'nullable|string|max:10',
-        'couleur'    => 'nullable|string|max:30',
-        'sexe'       => 'required|string|max:10',
-        'image_url'  => 'nullable|url',
-    ]);
+    public function edit(Produit $produit)
+    {
+        return view('produits.edit', compact('produit'));
+    }
 
-    $produit->update($data);
-    return redirect()->route('produits.index')->with('ok','Produit modifié.');
-}
-
+    public function update(Request $r, Produit $produit)
+    {
+        $data = $this->rules($r);
+        $produit->update($data);
+        return redirect()->route('produits.index')->with('ok', 'Produit modifié.');
+    }
 
     public function destroy(Produit $produit)
     {
         $produit->delete();
-        return redirect()->route('produits.index')->with('ok','Produit supprimé.');
+        return redirect()->route('produits.index')->with('ok', 'Produit supprimé.');
+    }
+
+    /** Valide et retourne les données autorisées */
+    private function rules(Request $r): array
+    {
+        return $r->validate([
+            'nom'         => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'prix'        => 'required|numeric|min:0',
+            'quantite'    => 'required|integer|min:0',
+            'categorie'   => 'nullable|string|max:50',
+            'marque'      => 'nullable|string|max:50',
+            'taille'      => 'nullable|string|max:10',
+            'couleur'     => 'nullable|string|max:30',
+            'sexe'        => 'nullable|string|max:10',
+            'image_url'   => 'nullable|url',
+        ]);
     }
 }
