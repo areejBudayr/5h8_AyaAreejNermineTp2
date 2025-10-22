@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Produit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProduitController extends Controller
 {
@@ -29,6 +30,14 @@ class ProduitController extends Controller
     public function store(Request $r)
     {
         $data = $this->rules($r);
+
+         // si une image a été envoyée, on la sauvegarde et on met son nom dans image_url
+    if ($r->hasFile('image')) {
+        $file = $r->file('image');
+        $name = Str::uuid().'.'.$file->getClientOriginalExtension(); // nom unique
+        $file->move(public_path('images'), $name);                  
+        $data['image_url'] = $name;                                  // on enregistre le nom
+    }
         Produit::create($data);
         return redirect()->route('produits.index')->with('ok', 'Produit ajouté.');
     }
@@ -46,6 +55,14 @@ class ProduitController extends Controller
     public function update(Request $r, Produit $produit)
     {
         $data = $this->rules($r);
+
+        // si une image a été envoyée, on la sauvegarde et on met son nom dans image_url
+    if ($r->hasFile('image')) {
+        $file = $r->file('image');
+        $name = Str::uuid().'.'.$file->getClientOriginalExtension(); 
+        $file->move(public_path('images'), $name);                  
+        $data['image_url'] = $name;                                  // on enregistre le nom
+    }
         $produit->update($data);
         return redirect()->route('produits.index')->with('ok', 'Produit modifié.');
     }
@@ -69,7 +86,7 @@ class ProduitController extends Controller
             'taille'      => 'nullable|string|max:10',
             'couleur'     => 'nullable|string|max:30',
             'sexe'        => 'nullable|string|max:10',
-            'image_url'   => 'nullable|url',
+            'image'   => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
     }
 }

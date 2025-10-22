@@ -3,12 +3,17 @@
 @section('header','Modifier produit')
 
 @section('content')
-<form method="POST" action="{{ route('produits.update',$produit) }}">
+<form method="POST" action="{{ route('produits.update',$produit) }}"
+enctype="multipart/form-data">
   @csrf @method('PUT')
   <p>Nom<br><input name="nom" value="{{ old('nom',$produit->nom) }}" required></p>
   <p>Description<br><textarea name="description">{{ old('description',$produit->description) }}</textarea></p>
   <p>Prix<br><input type="number" step="0.01" min="0" name="prix" value="{{ old('prix',$produit->prix) }}" required></p>
   <p>Quantité<br><input type="number" min="0" name="quantite" value="{{ old('quantite',$produit->quantite) }}" required></p>
+  <p>Image (JPG/PNG/WEBP)<br>
+    <input type="file" name="image" accept=".jpg,.jpeg,.png,.webp">
+  </p>
+
   <p><button class="button primary" type="submit">Mettre à jour</button></p>
 </form>
 @endsection

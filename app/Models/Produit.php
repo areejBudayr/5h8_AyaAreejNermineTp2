@@ -10,6 +10,6 @@ class Produit extends Model
 
     protected $fillable = [
         'nom','description','prix','quantite',
-        'categorie','marque','taille','couleur','image_url'
+        'categorie','marque','taille','couleur','sexe','image_url',
     ];
 }

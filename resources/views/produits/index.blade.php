@@ -37,45 +37,64 @@
     </form>
 
     {{-- tableau --}}
-    <div class="table-responsive">
-        <table class="table table-bordered align-middle">
-            <thead class="table-light">
-                <tr>
-                    <th style="width:80px">#</th>
-                    <th>Nom</th>
-                    <th style="width:140px">Prix</th>
-                    <th style="width:100px">Qté</th>
-                    <th style="width:220px"></th>
-                </tr>
-            </thead>
-            <tbody>
-            @forelse($produits as $p)
-                <tr>
-                    <td>{{ $p->id }}</td>
-                    <td>
-                        <a href="{{ route('produits.show',$p) }}">{{ $p->nom }}</a>
-                        @if($p->categorie)
-                            <div class="text-muted small">{{ $p->categorie }}</div>
-                        @endif
-                    </td>
-                    <td>{{ number_format($p->prix, 2, ',', ' ') }} $</td>
-                    <td>{{ $p->quantite }}</td>
-                    <td class="text-nowrap">
-                        <a class="btn btn-sm btn-outline-secondary" href="{{ route('produits.show',$p) }}">Voir</a>
-                        <a class="btn btn-sm btn-warning" href="{{ route('produits.edit',$p) }}">Modifier</a>
-                        <form class="d-inline" method="POST" action="{{ route('produits.destroy',$p) }}">
-                            @csrf @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger"
-                                    onclick="return confirm('Supprimer ce produit ?')">Supprimer</button>
-                        </form>
-                    </td>
-                </tr>
-            @empty
-                <tr><td colspan="5" class="text-center text-muted">Aucun produit.</td></tr>
-            @endforelse
-            </tbody>
-        </table>
-    </div>
+<div class="table-responsive">
+  <table class="table table-bordered align-middle">
+    <thead class="table-light">
+      <tr>
+        <th style="width:72px">Image</th>
+        <th style="width:80px">#</th>
+        <th>Nom</th>
+        <th style="width:140px">Prix</th>
+        <th style="width:100px">Qté</th>
+        <th style="width:220px"></th>
+      </tr>
+    </thead>
+    <tbody>
+      @forelse($produits as $p)
+        <tr>
+          {{-- Image --}}
+          <td>
+            <img
+              src="{{ $p->image_url ? asset('images/'.$p->image_url) : asset('images/placeholder.png') }}"
+              alt="{{ $p->nom }}"
+              style="height:48px;width:64px;object-fit:cover;border-radius:8px">
+          </td>
+
+          {{-- ID --}}
+          <td>{{ $p->id }}</td>
+
+          {{-- Nom (+ catégorie en petit) --}}
+          <td>
+            <a href="{{ route('produits.show',$p) }}">{{ $p->nom }}</a>
+            @if($p->categorie)
+              <div class="text-muted small">{{ $p->categorie }}</div>
+            @endif
+          </td>
+
+          {{-- Prix --}}
+          <td>{{ number_format($p->prix, 2, ',', ' ') }} $</td>
+
+          {{-- Quantité --}}
+          <td>{{ $p->quantite }}</td>
+
+          {{-- Actions --}}
+          <td class="text-nowrap">
+            <a class="btn btn-sm btn-outline-secondary" href="{{ route('produits.show',$p) }}">Voir</a>
+            <a class="btn btn-sm btn-warning" href="{{ route('produits.edit',$p) }}">Modifier</a>
+            <form class="d-inline" method="POST" action="{{ route('produits.destroy',$p) }}">
+              @csrf @method('DELETE')
+              <button type="submit" class="btn btn-sm btn-danger"
+                      onclick="return confirm('Supprimer ce produit ?')">Supprimer</button>
+            </form>
+          </td>
+        </tr>
+      @empty
+        <tr><td colspan="6" class="text-center text-muted">Aucun produit.</td></tr>
+      @endforelse
+    </tbody>
+  </table>
+</div>
+
 
     {{-- pagination (conserve les filtres) --}}
     <div class="mt-3">
