@@ -1,0 +1,217 @@
+/* ===== Thème Boutique Femme (rose/noir/gris) ===== */
+:root {
+    --pink-600: #e91e63;
+    --pink-500: #ff4da6;
+    --pink-100: #ffe4ef;
+    --black: #0b0b0c;
+    --gray-900: #111827;
+    --gray-700: #374151;
+    --gray-500: #6b7280;
+    --gray-200: #e5e7eb;
+    --white: #ffffff;
+}
+
+/* base */
+* {
+    box-sizing: border-box;
+}
+html,
+body {
+    height: 100%;
+}
+body {
+    margin: 0;
+    color: var(--gray-900);
+    background: #fafafa;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+        Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    line-height: 1.55;
+}
+a {
+    color: var(--pink-600);
+    text-decoration: none;
+}
+a:hover {
+    opacity: 0.9;
+}
+
+/* conteneur */
+.container {
+    max-width: 1100px;
+    margin: 32px auto;
+    padding: 0 16px;
+}
+
+/* ===== Header / Navbar ===== */
+.site-header {
+    background: var(--black);
+    color: var(--white);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+}
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 16px;
+}
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+.brand .logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--pink-500), var(--pink-600));
+    display: inline-block;
+}
+.brand .title {
+    font-size: 20px;
+    color: var(--white);
+}
+.nav {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+.nav a {
+    color: #e9e9e9;
+    padding: 8px 10px;
+    border-radius: 10px;
+    transition: 0.15s;
+}
+.nav a:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+.nav .active {
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+}
+
+/* boutons */
+.btn {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--gray-200);
+    background: #fff;
+    color: var(--gray-900);
+    transition: 0.15s;
+    font-weight: 600;
+}
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+.btn.primary {
+    background: var(--pink-600);
+    border-color: var(--pink-600);
+    color: #fff;
+}
+.btn.outline {
+    background: transparent;
+    color: #fff;
+    border-color: #ffffff33;
+}
+.btn.outline:hover {
+    background: #ffffff1a;
+}
+
+/* cartes produits (si tu affiches des cartes) */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 18px;
+}
+.card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+.card .thumb {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    background: #111;
+}
+.card .body {
+    padding: 12px 14px;
+}
+.card .name {
+    font-weight: 700;
+    margin: 4px 0 6px;
+}
+.card .meta {
+    color: var(--gray-500);
+    font-size: 13px;
+}
+
+/* tableau amélioré (si tu gardes la liste en table) */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+}
+.table th,
+.table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #f1f1f1;
+}
+.table thead th {
+    background: #fcfcfd;
+    color: #111;
+    font-weight: 800;
+}
+.table tr:last-child td {
+    border-bottom: 0;
+}
+
+/* barre d’outils / recherche */
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin: 16px 0;
+}
+.search {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+.search input {
+    padding: 8px 12px;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    min-width: 220px;
+    background: #fff;
+}
+
+/* badges / alertes */
+.badge {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: var(--pink-100);
+    color: var(--pink-600);
+    font-weight: 700;
+    font-size: 12px;
+}
+.alert {
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: #fef2f2;
+    border: 1px solid #fde2e2;
+    color: #b91c1c;
+}
