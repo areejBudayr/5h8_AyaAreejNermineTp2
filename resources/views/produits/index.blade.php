@@ -6,21 +6,17 @@
 <div class="container mt-4">
 
     {{-- HERO / TITRE CENTRÉ --}}
-<div class="page-hero">
-  <h1>Produits</h1>
-</div>
+<h1>{{ __('app.title_products') }}</h1>
 
 {{-- FILTRES RÉORGANISÉS --}}
 <form method="GET" class="filters-v3">
   <div class="top-row">
     <div class="search-box">
-      <input type="text" name="search"
-             value="{{ request('search') }}"
-             placeholder="Rechercher un nom…">
+      <input name="search" placeholder="{{ __('app.search_name') }}">
     </div>
     <div class="category-box">
       <select name="category_id">
-        <option value="">Toutes les catégories</option>
+        <option value="">{{ __('app.all_categories') }}</option>
         @foreach($categories as $c)
           <option value="{{ $c->id }}" @selected(request('category_id') == $c->id)>
             {{ $c->nom }}
@@ -31,8 +27,8 @@
   </div>
 
   <div class="actions">
-    <a href="{{ route('produits.index') }}" class="btn btn-ghost">Réinitialiser</a>
-    <button class="btn btn-primary">Filtrer</button>
+    <a href="{{ route('produits.index') }}" class="btn btn-ghost">{{ __('app.reset') }}</a>
+    <button class="btn btn-primary">{{ __('app.filter') }}</button>
   </div>
 </form>
 
@@ -55,12 +51,11 @@
   <table class="table table-bordered align-middle" style="margin:0">
     <thead class="table-light">
       <tr>
-        <th style="width:72px">Image</th>
-        <th style="width:80px">#</th>
-        <th>Nom</th>
-        <th style="width:140px">Prix</th>
-        <th style="width:100px">Qté</th>
-        <th style="width:220px"></th>
+        <th style="width:72px">{{ __('app.image') }}</th>
+<th style="width:80px">{{ __('app.id') }}</th>
+<th>{{ __('app.name') }}</th>
+<th style="width:140px">{{ __('app.price') }}</th>
+<th style="width:100px">{{ __('app.qty') }}</th>
       </tr>
     </thead>
     <tbody>
@@ -92,12 +87,12 @@
 
           {{-- Actions --}}
           <td class="text-nowrap">
-            <a class="btn btn-sm btn-outline-secondary" href="{{ route('produits.show',$p) }}">Voir</a>
-            <a class="btn btn-sm btn-warning" href="{{ route('produits.edit',$p) }}">Modifier</a>
+          <a class="btn btn-sm btn-outline-secondary" href="...">{{ __('app.show') }}</a>
+          <a class="btn btn-sm btn-warning" href="...">{{ __('app.edit') }}</a>
             <form class="d-inline" method="POST" action="{{ route('produits.destroy',$p) }}">
               @csrf @method('DELETE')
               <button type="submit" class="btn btn-sm btn-danger"
-                      onclick="return confirm('Supprimer ce produit ?')">Supprimer</button>
+                      onclick="return confirm('Supprimer ce produit ?')">{{ __('app.delete') }}</button>
             </form>
           </td>
         </tr>

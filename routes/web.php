@@ -14,3 +14,9 @@ Route::get('/categories/autocomplete', [ProduitController::class,'autocompleteCa
 
 Route::get('/categories/{categorie}', [ProduitController::class,'showCategory'])
      ->name('categories.show');
+
+Route::get('/lang/{locale}', function ($locale) {
+    abort_unless(in_array($locale, ['fr','en','ar']), 404);
+    session(['locale' => $locale]);
+    return back();
+})->name('lang.switch');

@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="fr">
+<html lang="{{ app()->getLocale() }}"
+      @if(app()->getLocale()==='ar') dir="rtl" class="rtl" @endif>
 <head>
   <meta charset="utf-8">
   <title>@yield('title','Catalogue')</title>
@@ -14,19 +15,26 @@
   <header class="site-header">
     <div class="container navbar">
       <a href="{{ url('/') }}" class="brand" aria-label="Accueil">
-        {{-- Remplace plus tard par ton image de logo :
-             <img src="{{ asset('images/logo.png') }}" alt="NAAR" class="logo" style="width:36px;height:36px;border-radius:10px"> --}}
+       
+             
         <span class="logo"></span>
-        <span class="title">NAAR Boutique</span>
+        <span class="title">{{ __('app.brand') }}</span>
       </a>
 
       <nav class="nav">
-        <a href="{{ route('produits.index') }}" class="{{ request()->is('produits*') ? 'active' : '' }}">Produits</a>
+        <div class="lang-switch">
+  <a href="{{ route('lang.switch','fr') }}" class="{{ app()->getLocale()=='fr' ? 'active' : '' }}">FR</a>
+  <a href="{{ route('lang.switch','en') }}" class="{{ app()->getLocale()=='en' ? 'active' : '' }}">EN</a>
+  <a href="{{ route('lang.switch','ar') }}" class="{{ app()->getLocale()=='ar' ? 'active' : '' }}">AR</a>
+</div>
+        <a href="{{ route('produits.index') }}" class="{{ request()->is('produits*') ? 'active' : '' }}">
+  {{ __('app.products') }}
+</a>
         <!-- <a href="#" title="Collections à venir">Collections</a> -->
-        <a href="#" title="À propos">À propos</a>
+        <a href="#" title="À propos">{{ __('app.about') }}</a>
 
-        <a href="{{ route('produits.create') }}" class="btn primary">+ Nouveau</a>
-        <a href="#" class="btn outline">Connexion</a>
+        <a href="{{ route('produits.create') }}" class="btn primary">{{ __('app.new') }}</a>
+       <a href="#" class="btn outline">{{ __('app.login') }}</a>
       </nav>
     </div>
   </header>
@@ -43,6 +51,9 @@
     <style>
       nav[role="navigation"] svg { width:16px; height:16px; vertical-align:middle; }
       nav[role="navigation"] .hidden { display:none; }
+      rtl body { direction: rtl; }
+.rtl .navbar { flex-direction: row-reverse; }
+.rtl .nav a { margin-right: 16px; margin-left: 0; }
       
     </style>
   </main>
