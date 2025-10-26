@@ -5,13 +5,38 @@
 @section('content')
 <div class="container mt-4">
 
-    {{-- barre d’actions --}}
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="m-0">Produits</h2>
-        <a href="{{ route('produits.create') }}" class="btn btn-primary">+ Ajouter</a>
-    </div>
+    {{-- HERO / TITRE CENTRÉ --}}
+<div class="page-hero">
+  <h1>Produits</h1>
+</div>
 
-    {{-- messages flash / erreurs --}}
+{{-- FILTRES RÉORGANISÉS --}}
+<form method="GET" class="filters-v3">
+  <div class="top-row">
+    <div class="search-box">
+      <input type="text" name="search"
+             value="{{ request('search') }}"
+             placeholder="Rechercher un nom…">
+    </div>
+    <div class="category-box">
+      <select name="category_id">
+        <option value="">Toutes les catégories</option>
+        @foreach($categories as $c)
+          <option value="{{ $c->id }}" @selected(request('category_id') == $c->id)>
+            {{ $c->nom }}
+          </option>
+        @endforeach
+      </select>
+    </div>
+  </div>
+
+  <div class="actions">
+    <a href="{{ route('produits.index') }}" class="btn btn-ghost">Réinitialiser</a>
+    <button class="btn btn-primary">Filtrer</button>
+  </div>
+</form>
+
+     {{-- messages flash / erreurs --}}
     @if(session('ok'))
         <div class="alert alert-success">{{ session('ok') }}</div>
     @endif
@@ -25,30 +50,9 @@
         </div>
     @endif
 
-    {{-- filtres simples --}}
-    <form method="GET" class="row g-2 mb-3">
-        <div class="col-sm-6 col-md-4">
-            <input name="search" value="{{ request('search') }}" class="form-control" placeholder="Rechercher un nom…">
-        </div>
-        <div class="col-auto">
-            <button class="btn btn-outline-primary">Filtrer</button>
-            <a href="{{ route('produits.index') }}" class="btn btn-outline-secondary">Réinitialiser</a>
-        </div>
-        <div class="col-sm-6 col-md-3">
-  <select name="category_id" class="form-select" onchange="this.form.submit()">
-    <option value="">Toutes les catégories</option>
-    @foreach($categories as $c)
-      <option value="{{ $c->id }}" @selected(request('category_id') == $c->id)>
-        {{ $c->nom }}
-      </option>
-    @endforeach
-  </select>
-</div>
-    </form>
-
     {{-- tableau --}}
-<div class="table-responsive">
-  <table class="table table-bordered align-middle">
+<div class="table-responsive table-card">
+  <table class="table table-bordered align-middle" style="margin:0">
     <thead class="table-light">
       <tr>
         <th style="width:72px">Image</th>
