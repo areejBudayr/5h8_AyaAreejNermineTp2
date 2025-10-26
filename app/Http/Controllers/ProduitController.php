@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\Produit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Models\Categorie;
+use Illuminate\Support\Facades\DB;
 
 class ProduitController extends Controller
 {
@@ -11,20 +13,24 @@ class ProduitController extends Controller
     {
         $q = Produit::query()->orderBy('created_at','desc');
 
+
         // filtres optionnels
         if ($r->filled('search'))   $q->where('nom', 'like', '%'.$r->search.'%');
         if ($r->filled('categorie'))$q->where('categorie', $r->categorie);
         if ($r->filled('taille'))   $q->where('taille', $r->taille);
         if ($r->filled('sexe'))     $q->where('sexe', $r->sexe);
+        if ($r->filled('category_id')) $q->where('category_id', $r->category_id);
 
         $produits = $q->paginate(10)->appends($r->query());
-
-        return view('produits.index', compact('produits'));
+        $categories = Categorie::orderBy('nom')->get();
+        
+        return view('produits.index', compact('produits','categories'));
     }
 
     public function create()
     {
-        return view('produits.create');
+       $categories = Categorie::orderBy('nom')->get();
+    return view('produits.create', compact('categories'));
     }
 
     public function store(Request $r)
@@ -49,7 +55,8 @@ class ProduitController extends Controller
 
     public function edit(Produit $produit)
     {
-        return view('produits.edit', compact('produit'));
+         $categories = Categorie::orderBy('nom')->get();
+    return view('produits.edit', compact('produit','categories'));
     }
 
     public function update(Request $r, Produit $produit)
@@ -87,6 +94,31 @@ class ProduitController extends Controller
             'couleur'     => 'nullable|string|max:30',
             'sexe'        => 'nullable|string|max:10',
             'image'   => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'category_id' => 'nullable|exists:categories,id',
         ]);
     }
+
+public function autocompleteCategories(Request $r)
+{
+    $q = trim($r->get('q',''));
+    if ($q === '') return response()->json([]);
+
+    // INNER JOIN pour compter le nb de produits par catégorie
+    $rows = Categorie::select('categories.id','categories.nom', DB::raw('COUNT(produits.id) as nb'))
+        ->join('produits','produits.category_id','=','categories.id') // INNER JOIN
+        ->where('categories.nom','like','%'.$q.'%')
+        ->groupBy('categories.id','categories.nom')
+        ->orderBy('categories.nom')
+        ->limit(8)
+        ->get();
+
+    return response()->json($rows);
+}
+
+// Page d'une catégorie
+public function showCategory(Categorie $categorie)
+{
+    $produits = $categorie->produits()->latest()->paginate(12);
+    return view('categories.show', compact('categorie','produits'));
+}
 }

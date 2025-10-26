@@ -8,3 +8,9 @@ Route::get('/', function () {
 });
 
 Route::resource('produits', ProduitController::class);
+
+Route::get('/categories/autocomplete', [ProduitController::class,'autocompleteCategories'])
+     ->name('categories.autocomplete');
+
+Route::get('/categories/{categorie}', [ProduitController::class,'showCategory'])
+     ->name('categories.show');

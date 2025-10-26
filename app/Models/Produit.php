@@ -10,6 +10,11 @@ class Produit extends Model
 
     protected $fillable = [
         'nom','description','prix','quantite',
-        'categorie','marque','taille','couleur','sexe','image_url',
+        'categorie','marque','taille','couleur','sexe','image_url','category_id',
     ];
+
+    public function categorieRef()
+{
+    return $this->belongsTo(\App\Models\Categorie::class, 'category_id');
+}
 }

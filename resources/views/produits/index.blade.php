@@ -34,6 +34,16 @@
             <button class="btn btn-outline-primary">Filtrer</button>
             <a href="{{ route('produits.index') }}" class="btn btn-outline-secondary">Réinitialiser</a>
         </div>
+        <div class="col-sm-6 col-md-3">
+  <select name="category_id" class="form-select" onchange="this.form.submit()">
+    <option value="">Toutes les catégories</option>
+    @foreach($categories as $c)
+      <option value="{{ $c->id }}" @selected(request('category_id') == $c->id)>
+        {{ $c->nom }}
+      </option>
+    @endforeach
+  </select>
+</div>
     </form>
 
     {{-- tableau --}}
@@ -57,19 +67,18 @@
             <img
               src="{{ $p->image_url ? asset('images/'.$p->image_url) : asset('images/placeholder.png') }}"
               alt="{{ $p->nom }}"
-              style="height:48px;width:64px;object-fit:cover;border-radius:8px">
-          </td>
+              style="height:90px;width:auto;object-fit:contain;border-radius:8px;margin-right:8px;display:block;margin:auto;">          </td>
 
           {{-- ID --}}
           <td>{{ $p->id }}</td>
 
           {{-- Nom (+ catégorie en petit) --}}
           <td>
-            <a href="{{ route('produits.show',$p) }}">{{ $p->nom }}</a>
-            @if($p->categorie)
-              <div class="text-muted small">{{ $p->categorie }}</div>
-            @endif
-          </td>
+  <a href="{{ route('produits.show',$p) }}">{{ $p->nom }}</a>
+  @if($p->categorieRef)
+    <div class="text-muted small">{{ $p->categorieRef->nom }}</div>
+  @endif
+</td>
 
           {{-- Prix --}}
           <td>{{ number_format($p->prix, 2, ',', ' ') }} $</td>
