@@ -1,6 +1,6 @@
 <?php
 return [
-    'brand'          => 'NAAR بوتيك',
+    'brand'          => 'متجر نار',
     'products'       => 'المنتجات',
     'about'          => 'من نحن',
     'new'            => '+ جديد',

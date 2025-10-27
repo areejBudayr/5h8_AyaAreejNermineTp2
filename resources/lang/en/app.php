@@ -1,6 +1,6 @@
 <?php
 return [
-    'brand'        => 'NAAR Boutique',
+    'brand'        => 'NAAR Shop',
     'products'     => 'Products',
     'about'        => 'About',
     'new'          => '+ New',

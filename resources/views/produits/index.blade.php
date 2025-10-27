@@ -87,8 +87,8 @@
 
           {{-- Actions --}}
           <td class="text-nowrap">
-          <a class="btn btn-sm btn-outline-secondary" href="...">{{ __('app.show') }}</a>
-          <a class="btn btn-sm btn-warning" href="...">{{ __('app.edit') }}</a>
+          <a class="btn btn-sm btn-outline-secondary" href="{{ route('produits.show',$p) }}">{{ __('app.show') }}</a>
+          <a class="btn btn-sm btn-warning" href="{{ route('produits.edit',$p) }}">{{ __('app.edit') }}</a>
             <form class="d-inline" method="POST" action="{{ route('produits.destroy',$p) }}">
               @csrf @method('DELETE')
               <button type="submit" class="btn btn-sm btn-danger"
