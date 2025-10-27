@@ -16,12 +16,12 @@
              style="max-height:260px;border-radius:12px;display:block">
       </p>
     @endif
-        <p><strong>{{ __('app.name') }} :</strong> {{ $produit->nom }}</p>
-        <p><strong>{{ __('app.description') }} :</strong> {{ $produit->description ?? '—' }}</p>
+        <p><strong>{{ __('app.name') }} :</strong> {{ $produit->nomT() }}</p>
+        <p><strong>{{ __('app.description') }} :</strong> {{ $produit->descriptionT() ?? '—' }}</p>
         <p><strong>{{ __('app.price') }}:</strong> {{ number_format($produit->prix, 2, ',', ' ') }} $</p>
         <p><strong>{{ __('app.qty') }}:</strong> {{ $produit->quantite }}</p>
         @if($produit->categorieRef)
-    <p><strong>{{ __('app.category') }}:</strong> {{ $produit->categorieRef->nom }}</p>
+    <p><strong>{{ __('app.category') }}:</strong> {{ $produit->categorieRef->tNom() }}</p>
 @endif
     </div>
 

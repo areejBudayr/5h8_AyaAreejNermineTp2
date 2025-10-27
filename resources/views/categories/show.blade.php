@@ -1,12 +1,12 @@
 @extends('layouts.app')
-@section('title','Catégorie: '.$categorie->nom)
-@section('header','Catégorie: '.$categorie->nom)
+@section('title','Catégorie: '.$categorie->tNom())
+@section('header','Catégorie: '.$categorie->tNom())
 
 @section('content')
 <div class="container mt-4">
 
   <div class="page-toolbar">
-    <h2 class="title">{{ $categorie->nom }}</h2>
+    <h2 class="title">{{ $categorie->tNom() }}</h2>
     <p class="page-sub">{{ $produits->total() }} produit(s)</p>
   </div>
 

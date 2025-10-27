@@ -19,7 +19,7 @@
         <option value="">{{ __('app.all_categories') }}</option>
         @foreach($categories as $c)
           <option value="{{ $c->id }}" @selected(request('category_id') == $c->id)>
-            {{ $c->nom }}
+            {{ $c->tNom() }}
           </option>
         @endforeach
       </select>
@@ -73,9 +73,9 @@
 
           {{-- Nom (+ catégorie en petit) --}}
           <td>
-  <a href="{{ route('produits.show',$p) }}">{{ $p->nom }}</a>
+  <a href="{{ route('produits.show',$p) }}">{{ $p->nomT() }}</a>
   @if($p->categorieRef)
-    <div class="text-muted small">{{ $p->categorieRef->nom }}</div>
+    <div class="text-muted small">{{ $p->categorieRef->tNom() }}</div>
   @endif
 </td>
 

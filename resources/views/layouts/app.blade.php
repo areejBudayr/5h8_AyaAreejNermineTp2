@@ -51,9 +51,7 @@
     <style>
       nav[role="navigation"] svg { width:16px; height:16px; vertical-align:middle; }
       nav[role="navigation"] .hidden { display:none; }
-      rtl body { direction: rtl; }
-.rtl .navbar { flex-direction: row-reverse; }
-.rtl .nav a { margin-right: 16px; margin-left: 0; }
+
       
     </style>
   </main>

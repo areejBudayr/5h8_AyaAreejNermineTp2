@@ -353,6 +353,28 @@ a:hover {
     color: #888;
     text-decoration: none;
 }
+
+.rtl body {
+    direction: rtl;
+}
+.rtl .navbar {
+    flex-direction: row-reverse;
+}
+.rtl .nav {
+    flex-direction: row-reverse;
+    gap: 12px;
+}
+.rtl .nav a {
+    margin-right: 0;
+    margin-left: 16px;
+}
+.rtl .brand {
+    flex-direction: row-reverse;
+}
+
+.rtl .btn {
+    direction: rtl;
+}
 .lang-switch a.active {
     color: #ff2b7a;
 }

@@ -37,7 +37,7 @@
   @foreach($categories as $c)
     <option value="{{ $c->id }}"
       {{ old('category_id') == $c->id ? 'selected' : '' }}>
-      {{ $c->nom }}
+      {{ $c->tNom() }}
     </option>
   @endforeach
 </select>
