@@ -31,7 +31,7 @@
   {{ __('app.products') }}
 </a>
         <!-- <a href="#" title="Collections à venir">Collections</a> -->
-        <!-- <a href="#" title="À propos">{{ __('app.about') }}</a> -->
+        <a href="{{ route('about') }}" title="À propos">{{ __('app.about') }}</a>
 
         <a href="{{ route('produits.create') }}" class="btn primary">{{ __('app.new') }}</a>
        <a href="#" class="btn outline">{{ __('app.login') }}</a>

@@ -158,6 +158,12 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [ 
+        'nom'        => 'name',
+        'description'=> 'description',
+        'prix'       => 'price',
+        'quantite'   => 'quantity',
+        'image'      => 'image',
+        'category_id'=> 'category',],
 
 ];

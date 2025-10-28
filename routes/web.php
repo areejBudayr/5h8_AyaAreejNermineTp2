@@ -8,6 +8,7 @@ Route::get('/', function () {
 });
 
 Route::resource('produits', ProduitController::class);
+Route::view('/about','about')->name('about');
 
 Route::get('/categories/autocomplete', [ProduitController::class,'autocompleteCategories'])
      ->name('categories.autocomplete');
