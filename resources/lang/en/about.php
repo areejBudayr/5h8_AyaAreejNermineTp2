@@ -12,7 +12,7 @@ return [
     "Open a product detail page and verify DB translations.",
   ],
   'db_title' => 'Database diagram',
-  'db_hint'  => 'Export the diagram from phpMyAdmin (Designer) and place it here: public/images/db.png',
+  'db_hint'  => 'The diagram from phpMyAdmin',
   'inspo_title' => 'Inspiration',
   'inspo'  => [
     'Online shops references and Laravel docs.',

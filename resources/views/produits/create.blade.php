@@ -7,6 +7,16 @@
 <div class="page-toolbar">
   <h2 class="title">{{ __('products.new_product') }}</h2>
 </div>
+@if ($errors->any())
+  <div style="background:#ffe5e5;color:#b30000;padding:10px;border-radius:8px;margin-bottom:15px;">
+    <strong>{{ __('messages.error_title') }}</strong>
+    <ul style="margin-top:8px;">
+      @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+      @endforeach
+    </ul>
+  </div>
+@endif
 
 <form method="POST" action="{{ route('produits.store') }}" enctype="multipart/form-data" class="form-card">
   @csrf

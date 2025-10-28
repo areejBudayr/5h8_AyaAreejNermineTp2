@@ -12,7 +12,7 @@ return [
     "Ouvrir la page détail d’un produit et vérifier l’affichage des traductions BD.",
   ],
   'db_title' => 'Diagramme de la base de données',
-  'db_hint'  => 'Exportez le diagramme depuis phpMyAdmin (Designer) et placez l’image ici : public/images/db.png',
+  'db_hint'  => 'Le diagramme depuis phpMyAdmin',
   'inspo_title' => 'Sources d’inspiration',
   'inspo'  => [
     'Exemple de boutiques en ligne et documentation Laravel.',

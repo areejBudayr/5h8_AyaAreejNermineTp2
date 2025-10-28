@@ -12,7 +12,7 @@ return [
     'فتح صفحة تفاصيل المنتج والتحقق من ترجمات قاعدة البيانات.',
   ],
   'db_title' => 'مخطط قاعدة البيانات',
-  'db_hint'  => 'صدّر المخطط من phpMyAdmin (Designer) وضع الصورة هنا: public/images/db.png',
+  'db_hint'  => 'صدّر المخطط من phpMyAdmin',
   'inspo_title' => 'مصادر الإلهام',
   'inspo'  => [
     'متاجر إلكترونية وأدلة Laravel.',
