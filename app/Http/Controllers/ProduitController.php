@@ -96,7 +96,7 @@ class ProduitController extends Controller
             'image'   => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'category_id' => 'nullable|exists:categories,id',
         ]);
-    }
+    } 
 
 public function autocompleteCategories(Request $r)
 {
