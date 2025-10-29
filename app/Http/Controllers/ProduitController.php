@@ -15,11 +15,22 @@ class ProduitController extends Controller
 
 
         // filtres optionnels
-        if ($r->filled('search'))   $q->where('nom', 'like', '%'.$r->search.'%');
-        if ($r->filled('categorie'))$q->where('categorie', $r->categorie);
-        if ($r->filled('taille'))   $q->where('taille', $r->taille);
-        if ($r->filled('sexe'))     $q->where('sexe', $r->sexe);
-        if ($r->filled('category_id')) $q->where('category_id', $r->category_id);
+        if ($r->filled('search')) {
+    $q->where('nom', 'like', '%'.$r->search.'%');
+}
+
+if ($r->filled('category_id')) {
+    $q->where('category_id', $r->category_id);
+}
+
+if ($r->filled('taille')) {
+    $q->where('taille', $r->taille);
+}
+
+if ($r->filled('sexe')) {
+    $q->where('sexe', $r->sexe);
+}
+
 
         $produits = $q->paginate(10)->appends($r->query());
         $categories = Categorie::orderBy('nom')->get();
