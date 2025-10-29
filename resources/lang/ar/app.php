@@ -5,6 +5,7 @@ return [
     'about'          => 'من نحن',
     'new'            => '+ جديد',
     'login'          => 'تسجيل الدخول',
+        'actions' => 'عرض الملابس',
 
     'title_products' => 'المنتجات',
     'search_name'    => 'ابحث بالاسم…',

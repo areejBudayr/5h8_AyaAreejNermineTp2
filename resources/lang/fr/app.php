@@ -5,7 +5,7 @@ return [
     'about'        => 'À propos',
     'new'          => '+ Nouveau',
     'login'        => 'Connexion',
-
+    'actions' => 'Afficher',
     'title_products'=> 'Produits',
     'search_name'  => 'Rechercher un nom…',
     'all_categories'=> 'Toutes les catégories',

@@ -458,6 +458,7 @@ a:hover {
     width: 100%;
 }
 
+
 .btn {
     display: inline-flex;
     align-items: center;
@@ -491,4 +492,105 @@ a:hover {
     .filters-v3 .top-row {
         flex-direction: column;
     }
+}
+/* === Page Login & Register === */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 85vh;
+    background: #fafafa;
+}
+
+.login-card {
+    background: var(--white);
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    padding: 40px 45px;
+    width: 400px;
+    max-width: 90%;
+    text-align: left;
+    animation: fadeIn 0.5s ease;
+}
+
+.login-card h2 {
+    text-align: center;
+    font-weight: 800;
+    color: var(--gray-900);
+    margin-bottom: 28px;
+    font-size: 28px;
+    letter-spacing: 0.3px;
+}
+
+.login-card label {
+    display: block;
+    font-weight: 600;
+    color: var(--gray-700);
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+}
+.login-card input[type="text"],
+.login-card input[type="email"],
+.login-card input[type="password"] {
+    width: 100%;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 15px;
+    margin-bottom: 16px;
+    background: #f9f9fb;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.login-card input:focus {
+    outline: none;
+    border-color: var(--pink-500);
+    box-shadow: 0 0 0 3px rgba(255, 77, 166, 0.2);
+}
+
+/* Bouton principal */
+.login-card button[type="submit"] {
+    width: 100%;
+    background: var(--pink-600);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 0;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.4px;
+    transition: all 0.25s ease;
+}
+.login-card button[type="submit"]:hover {
+    background: var(--pink-500);
+    transform: scale(1.02);
+    box-shadow: 0 6px 16px rgba(233, 30, 99, 0.25);
+}
+
+/* Lien de bas de formulaire */
+.login-card a {
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    margin-top: 12px;
+    color: var(--pink-600);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+.login-card a:hover {
+    text-decoration: underline;
+}
+
+/* Erreurs */
+.invalid-feedback {
+    color: #e11d48;
+    font-size: 0.85rem;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }

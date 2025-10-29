@@ -9,13 +9,22 @@
     <h1>{{ __('app.title_products') }}</h1>
 
     {{-- FILTRES RÉORGANISÉS --}}
-    <form method="GET" class="filters-v3">
+    <form method="GET" action="{{ route('produits.index') }}" class="filters-v3" id="filterForm">
+
         <div class="top-row">
+            {{-- 🔍 Recherche --}}
             <div class="search-box">
-                <input name="search" placeholder="{{ __('app.search_name') }}">
+                <input 
+                    name="search" 
+                    type="text"
+                    value="{{ request('search') }}" 
+                    placeholder="{{ __('app.search_name') }}"
+                >
             </div>
+
+            {{-- 🏷️ Catégories --}}
             <div class="category-box">
-                <select name="category_id">
+                <select name="category_id" onchange="document.getElementById('filterForm').submit()">
                     <option value="">{{ __('app.all_categories') }}</option>
                     @foreach($categories as $c)
                         <option value="{{ $c->id }}" @selected(request('category_id') == $c->id)>
@@ -27,10 +36,42 @@
         </div>
 
         <div class="actions">
-            <a href="{{ route('produits.index') }}" class="btn btn-ghost">{{ __('app.reset') }}</a>
-            <button class="btn btn-primary">{{ __('app.filter') }}</button>
+            <a href="{{ route('produits.index') }}" class="btn btn-ghost" id="resetBtn">{{ __('app.reset') }}</a>
+            <button class="btn btn-primary" type="submit">{{ __('app.filter') }}</button>
         </div>
     </form>
+
+    {{-- 🧹 Script pour supprimer les champs vides avant soumission --}}
+    <script>
+    document.getElementById('filterForm').addEventListener('submit', function(e) {
+        const form = e.target;
+        const inputs = form.querySelectorAll('input, select');
+        inputs.forEach(el => {
+            if (!el.value.trim()) {
+                el.removeAttribute('name'); // retire les champs vides => URL propre
+            }
+        });
+    });
+
+    // Si tu veux que le bouton "Réinitialiser" vide aussi les champs :
+    document.getElementById('resetBtn').addEventListener('click', function(e) {
+        const form = document.getElementById('filterForm');
+        form.querySelectorAll('input, select').forEach(el => el.value = '');
+    });
+    </script>
+
+    {{-- 🔔 Message si recherche ou catégorie --}}
+    @if(request('search') || request('category_id'))
+        <p class="mt-3 text-muted">
+            @if(request('search'))
+                Résultats pour « <strong>{{ request('search') }}</strong> »
+            @endif
+            @if(request('category_id'))
+                dans la catégorie 
+                <strong>{{ $categories->firstWhere('id', request('category_id'))->tNom() }}</strong>
+            @endif
+        </p>
+    @endif
 
     {{-- messages flash / erreurs --}}
     @if(session('ok'))
@@ -62,7 +103,7 @@
             <tbody>
                 @forelse($produits as $p)
                     <tr>
-                        {{-- Image --}}
+                        {{-- 🖼️ Image --}}
                         <td>
                             <img
                                 src="{{ $p->image_url ? asset('images/'.$p->image_url) : asset('images/placeholder.png') }}"
@@ -70,10 +111,10 @@
                                 style="height:90px;width:auto;object-fit:contain;border-radius:8px;margin:auto;">
                         </td>
 
-                        {{-- ID --}}
+                        {{-- 🆔 ID --}}
                         <td>{{ $p->id }}</td>
 
-                        {{-- Nom (+ catégorie en petit) --}}
+                        {{-- 🏷️ Nom + catégorie --}}
                         <td>
                             <a href="{{ route('produits.show',$p) }}">{{ $p->nomT() }}</a>
                             @if($p->categorieRef)
@@ -81,17 +122,16 @@
                             @endif
                         </td>
 
-                        {{-- Prix --}}
+                        {{-- 💰 Prix --}}
                         <td>{{ number_format($p->prix, 2, ',', ' ') }} $</td>
 
-                        {{-- Quantité --}}
+                        {{-- 📦 Quantité --}}
                         <td>{{ $p->quantite }}</td>
 
-                        {{-- Actions --}}
+                        {{-- ⚙️ Actions --}}
                         <td class="text-nowrap">
                             <a class="btn btn-sm btn-outline-secondary" href="{{ route('produits.show',$p) }}">{{ __('app.show') }}</a>
 
-                            {{-- EDIT / DELETE uniquement pour ADMIN --}}
                             @if(Auth::user() && Auth::user()->role === App\Models\User::ROLE_ADMIN)
                                 <a class="btn btn-sm btn-warning" href="{{ route('produits.edit',$p) }}">{{ __('app.edit') }}</a>
                                 <form class="d-inline" method="POST" action="{{ route('produits.destroy',$p) }}">

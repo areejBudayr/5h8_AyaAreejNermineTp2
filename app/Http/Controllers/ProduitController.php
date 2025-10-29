@@ -16,10 +16,16 @@ class ProduitController extends Controller
 
         // filtres optionnels
         if ($r->filled('search')) {
-    $q->where('nom', 'like', '%'.$r->search.'%');
+    $search = trim($r->search);
+    $q->where(function($w) use ($search) {
+        $w->where(DB::raw('LOWER(nom)'), 'like', '%' . strtolower($search) . '%')
+          ->orWhere(DB::raw('LOWER(description)'), 'like', '%' . strtolower($search) . '%');
+    });
 }
 
-if ($r->filled('category_id')) {
+
+
+if ($r->has('category_id') && $r->category_id !== '') {
     $q->where('category_id', $r->category_id);
 }
 

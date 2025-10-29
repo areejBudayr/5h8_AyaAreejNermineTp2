@@ -5,6 +5,7 @@ return [
     'about'        => 'About',
     'new'          => '+ New',
     'login'        => 'Login',
+        'actions' => 'Display',
 
     'title_products'=> 'Products',
     'search_name'  => 'Search a name…',
